@@ -12,9 +12,9 @@ Aplikacja działa lokalnie z wykorzystaniem XAMPP (Apache + MySQL) i zostanie na
 Projekt realizowany przez grupę 5 osób:
 - Julia Sparzak 
 - Artur Ziemczonek
-- Aleksander Zimek
+- Aleks Zimek
 - Daniel Monkiewicz
-- ???
+- Pawel Rapacki 
 
 ---
 
