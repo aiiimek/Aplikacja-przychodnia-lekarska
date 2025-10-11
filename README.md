@@ -38,4 +38,3 @@ Projekt realizowany przez grupę 5 osób:
 6. **Panel administratora** – dodawanie lekarzy, zarządzanie użytkownikami.  
 
 ---
-############################################################################
