@@ -1,0 +1,4 @@
+/* Custom styles for login page */
+.auth-card { border-radius: 1rem; overflow: hidden; }
+.auth-left { background: linear-gradient(180deg,#4e73df 0%,#224abe 100%); color: #fff; }
+.auth-left .brand { font-weight:700; letter-spacing: .5px; }
