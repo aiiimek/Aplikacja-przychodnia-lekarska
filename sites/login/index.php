@@ -1,38 +1,5 @@
 <?php
 require_once __DIR__ . '/../../SaySoft/master.php';
-
-login_init();
- $errors = [];
- $login = '';
- $password = '';
-
-// field-oriented error buckets (always defined for templates)
- $fieldErrors = ['login' => [], 'password' => [], 'general' => []];
-
-if (isset($_SESSION['user_id'])) {
-  header('Location: ../../index.php');
-  exit;
-}
-
- if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $login = trim($_POST['login'] ?? '');
-  $password = $_POST['password'] ?? '';
-  $rememberFlag = !empty($_POST['remember']);
-
-  // pass fieldErrors by reference so attempt_login can fill them
-  if (attempt_login($login, $password, $errors, $fieldErrors, $rememberFlag)) {
-    header('Location: ../../index.php');
-    exit;
-  }
-  // also write a developer-friendly copy to PHP error log for quick debugging
-  if (!empty($errors)) {
-    error_log('[sites/login/index.php] Login errors: ' . implode(' | ', $errors));
-  }
-}
-
-// helper CSS classes for Bootstrap invalid state
-$loginInvalidClass = !empty($fieldErrors['login']) ? ' is-invalid' : '';
-$passwordInvalidClass = !empty($fieldErrors['password']) ? ' is-invalid' : '';
 ?>
 <!doctype html>
 <html lang="pl">
@@ -69,35 +36,18 @@ $passwordInvalidClass = !empty($fieldErrors['password']) ? ' is-invalid' : '';
               <div class="card-body p-5">
                 <h3 class="card-title text-center mb-3">Logowanie do portalu pacjenta</h3>
 
-                <?php if (!empty($fieldErrors['general']) || !empty($fieldErrors['email']) || !empty($fieldErrors['password'])): ?>
-                  <div class="alert alert-danger" role="alert">
-                    <ul class="mb-0">
-                      <?php foreach (array_merge($fieldErrors['general'], $fieldErrors['email'], $fieldErrors['password']) as $err): ?>
-                        <li><?php echo htmlspecialchars($err); ?></li>
-                      <?php endforeach; ?>
-                    </ul>
-                  </div>
-                <?php endif; ?>
+                <!-- Alerty z JS -->
+                <div id="loginAlert"></div>
 
-                <form id="loginForm" method="post" action="" novalidate>
+                <form id="loginForm" novalidate>
                   <div class="form-group">
-                    <label for="login">Nazwa użytkownika</label>
-                    <input id="login" name="login" type="text" class="form-control form-control-lg<?php echo $loginInvalidClass; ?>" placeholder="twoj_login" value="<?php echo htmlspecialchars($login); ?>" required>
-                    <?php if (!empty($fieldErrors['login'])): ?>
-                      <div class="invalid-feedback">
-                        <?php echo htmlspecialchars(implode(' ', $fieldErrors['login'])); ?>
-                      </div>
-                    <?php endif; ?>
+                    <label for="username">Nazwa użytkownika</label>
+                    <input id="username" name="username" type="text" class="form-control form-control-lg" placeholder="Login" required>
                   </div>
 
                   <div class="form-group">
                     <label for="password">Hasło</label>
-                    <input id="password" name="password" type="password" class="form-control form-control-lg<?php echo $passwordInvalidClass; ?>" placeholder="Twoje hasło" required minlength="6">
-                    <?php if (!empty($fieldErrors['password'])): ?>
-                      <div class="invalid-feedback">
-                        <?php echo htmlspecialchars(implode(' ', $fieldErrors['password'])); ?>
-                      </div>
-                    <?php endif; ?>
+                    <input id="password" name="password" type="password" class="form-control form-control-lg" placeholder="Hasło" required minlength="6">
                   </div>
 
                   <div class="form-row align-items-center mb-3">
@@ -112,24 +62,11 @@ $passwordInvalidClass = !empty($fieldErrors['password']) ? ' is-invalid' : '';
                     </div>
                   </div>
 
-                  <button type="submit" class="btn btn-primary btn-block btn-lg">Zaloguj się</button>
+                  <button type="button" class="btn btn-primary btn-block btn-lg" onclick="Login.Login()">Zaloguj się</button>
                 </form>
 
                 <hr class="my-4">
                 <p class="text-center small mb-0">Nie masz konta? <a href="../register/">Zarejestruj się</a></p>
-
-                <?php if (!empty($errors) || !empty($fieldErrors['general'])): ?>
-                  <div class="card mt-4 border-danger">
-                    <div class="card-header bg-danger text-white">Log błędów (debug)</div>
-                    <div class="card-body small">
-                      <strong>Pełna lista błędów:</strong>
-                      <pre class="mb-2" style="white-space:pre-wrap; word-wrap:break-word;"><?php echo htmlspecialchars(json_encode($errors, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)); ?></pre>
-
-                      <strong>Błędy pola:</strong>
-                      <pre class="mb-0" style="white-space:pre-wrap; word-wrap:break-word;"><?php echo htmlspecialchars(json_encode($fieldErrors, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)); ?></pre>
-                    </div>
-                  </div>
-                <?php endif; ?>
 
               </div>
             </div>
@@ -142,20 +79,7 @@ $passwordInvalidClass = !empty($fieldErrors['password']) ? ' is-invalid' : '';
 
   <script src="../../assets/vendor/jquery/jquery.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Prosta walidacja bootstrapowa po stronie klienta (ulepsza UX)
-    (function(){
-      'use strict'
-      var form = document.getElementById('loginForm')
-      form.addEventListener('submit', function(event){
-        if(!form.checkValidity()){
-          event.preventDefault(); event.stopPropagation();
-        }
-        form.classList.add('was-validated')
-      }, false)
-    })()
-  </script>
+  <script src="../../assets/js/base/login.js"></script> <!-- Twój Login.Login() JS -->
 
 </body>
-
 </html>

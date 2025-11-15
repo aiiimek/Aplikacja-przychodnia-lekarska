@@ -1,0 +1,1 @@
+<!-- TU SOM KLASY PHPOWE -->

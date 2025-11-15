@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-// Database configuration - override these in a separate config if needed
 if (!defined('DB_HOST')) define('DB_HOST', 'localhost');
 if (!defined('DB_NAME')) define('DB_NAME', 'lekario');
 if (!defined('DB_USER')) define('DB_USER', 'root');
@@ -15,4 +14,23 @@ function db_connect(): PDO {
         PDO::ATTR_EMULATE_PREPARES => false,
     ];
     return new PDO($dsn, DB_USER, DB_PASS, $options);
+}
+
+function testConnection() {
+    try {
+        $pdo = db_connect();
+        return true;
+    } catch (PDOException $e) {
+        error_log('Błąd połączenia z BD: ' . $e->getMessage());
+        return false;
+    }
+}
+
+if (isset($_GET['test']) && $_GET['test'] === 'db') {
+    if (testConnection()) {
+        echo 'Połączenie z bazą danych powiodło się.';
+    } else {
+        http_response_code(500);
+        echo 'Błąd połączenia z bazą danych.';
+    }
 }

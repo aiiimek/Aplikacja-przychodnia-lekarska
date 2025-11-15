@@ -2832,8 +2832,8 @@ var exports$1 = {
 			// almost a circle. 0.516 (instead of 0.5) produces results with visually
 			// closer proportion to the previous impl and it is inscribed in the
 			// circle with `radius`. For more details, see the following PRs:
-			// https://github.com/chartassets/js/Chart.assets/js/issues/5597
-			// https://github.com/chartassets/js/Chart.assets/js/issues/5858
+			// https://github.com/chartjs/Chart.js/issues/5597
+			// https://github.com/chartjs/Chart.js/issues/5858
 			cornerRadius = radius * 0.516;
 			size = radius - cornerRadius;
 			xOffset = Math.cos(rad + QUARTER_PI) * size;
@@ -3541,7 +3541,7 @@ var core_animations = {
 			numSteps = animation.numSteps;
 
 			// Make sure that currentStep starts at 1
-			// https://github.com/chartassets/js/Chart.assets/js/issues/6104
+			// https://github.com/chartjs/Chart.js/issues/6104
 			nextStep = Math.floor((Date.now() - animation.startTime) / animation.duration * numSteps) + 1;
 			animation.currentStep = Math.min(nextStep, numSteps);
 
@@ -5988,7 +5988,7 @@ var controller_line = core_datasetController.extend({
 		var values = core_datasetController.prototype._resolveDatasetElementOptions.apply(me, arguments);
 
 		// The default behavior of lines is to break at null values, according
-		// to https://github.com/chartassets/js/Chart.assets/js/issues/2435#issuecomment-216718158
+		// to https://github.com/chartjs/Chart.js/issues/2435#issuecomment-216718158
 		// This option gives lines the ability to span gaps
 		values.spanGaps = valueOrDefault$6(config.spanGaps, options.spanGaps);
 		values.tension = valueOrDefault$6(config.lineTension, lineOptions.tension);
@@ -7393,7 +7393,7 @@ var core_layouts = {
 
 /**
  * Platform fallback implementation (minimal).
- * @see https://github.com/chartassets/js/Chart.assets/js/pull/4591#issuecomment-319575939
+ * @see https://github.com/chartjs/Chart.js/pull/4591#issuecomment-319575939
  */
 
 var platform_basic = {
@@ -7483,7 +7483,7 @@ function initCanvas(canvas, config) {
 
 	// Force canvas to display as block to avoid extra space caused by inline
 	// elements, which would interfere with the responsive resize process.
-	// https://github.com/chartassets/js/Chart.assets/js/issues/2538
+	// https://github.com/chartjs/Chart.js/issues/2538
 	style.display = style.display || 'block';
 
 	if (renderWidth === null || renderWidth === '') {
@@ -7532,7 +7532,7 @@ var supportsEventListenerOptions = (function() {
 }());
 
 // Default passive to true as expected by Chrome for 'touchstart' and 'touchend' events.
-// https://github.com/chartassets/js/Chart.assets/js/issues/4287
+// https://github.com/chartjs/Chart.js/issues/4287
 var eventListenerOptions = supportsEventListenerOptions ? {passive: true} : false;
 
 function addListener(node, type, listener) {
@@ -7588,7 +7588,7 @@ function createResizer(handler) {
 	var maxSize = 1000000;
 
 	// NOTE(SB) Don't use innerHTML because it could be considered unsafe.
-	// https://github.com/chartassets/js/Chart.assets/js/issues/5902
+	// https://github.com/chartjs/Chart.js/issues/5902
 	var resizer = createDiv(CSS_SIZE_MONITOR);
 	var expand = createDiv(CSS_SIZE_MONITOR + '-expand');
 	var shrink = createDiv(CSS_SIZE_MONITOR + '-shrink');
@@ -7633,7 +7633,7 @@ function watchForRender(node, handler) {
 	// is removed then added back immediately (same animation frame?). Accessing the
 	// `offsetParent` property will force a reflow and re-evaluate the CSS animation.
 	// https://gist.github.com/paulirish/5d52fb081b3570c81e3a#box-metrics
-	// https://github.com/chartassets/js/Chart.assets/js/issues/4737
+	// https://github.com/chartjs/Chart.js/issues/4737
 	expando.reflow = !!node.offsetParent;
 
 	node.classList.add(CSS_RENDER_MONITOR);
@@ -7727,7 +7727,7 @@ var platform_dom$2 = {
 	 * correctly detect when the chart is added to the DOM and then resized. This
 	 * switch has been added to allow external stylesheet (`dist/Chart(.min)?.js`)
 	 * to be manually imported to make this library compatible with any CSP.
-	 * See https://github.com/chartassets/js/Chart.assets/js/issues/5208
+	 * See https://github.com/chartjs/Chart.js/issues/5208
 	 */
 	disableCSSInjection: false,
 
@@ -7747,7 +7747,7 @@ var platform_dom$2 = {
 		if (!this.disableCSSInjection) {
 			// If the canvas is in a shadow DOM, then the styles must also be inserted
 			// into the same shadow DOM.
-			// https://github.com/chartassets/js/Chart.assets/js/issues/5763
+			// https://github.com/chartjs/Chart.js/issues/5763
 			var root = canvas.getRootNode ? canvas.getRootNode() : document;
 			var targetNode = root.host ? root : document.head;
 			injectCSS(targetNode, stylesheet);
@@ -7769,16 +7769,16 @@ var platform_dom$2 = {
 
 		// To prevent canvas fingerprinting, some add-ons undefine the getContext
 		// method, for example: https://github.com/kkapsner/CanvasBlocker
-		// https://github.com/chartassets/js/Chart.assets/js/issues/2807
+		// https://github.com/chartjs/Chart.js/issues/2807
 		var context = item && item.getContext && item.getContext('2d');
 
 		// `instanceof HTMLCanvasElement/CanvasRenderingContext2D` fails when the item is
 		// inside an iframe or when running in a protected environment. We could guess the
 		// types from their toString() value but let's keep things flexible and assume it's
 		// a sufficient condition if the item has a context2D which has item as `canvas`.
-		// https://github.com/chartassets/js/Chart.assets/js/issues/3887
-		// https://github.com/chartassets/js/Chart.assets/js/issues/4102
-		// https://github.com/chartassets/js/Chart.assets/js/issues/4152
+		// https://github.com/chartjs/Chart.js/issues/3887
+		// https://github.com/chartjs/Chart.js/issues/4102
+		// https://github.com/chartjs/Chart.js/issues/4152
 		if (context && context.canvas === item) {
 			// Load platform resources on first chart creation, to make it possible to
 			// import the library before setting platform options.
@@ -8089,7 +8089,7 @@ var core_plugins = {
 	/**
 	 * Invalidates cache for the given chart: descriptors hold a reference on plugin option,
 	 * but in some cases, this reference can be changed by the user when updating options.
-	 * https://github.com/chartassets/js/Chart.assets/js/issues/5111#issuecomment-355934167
+	 * https://github.com/chartjs/Chart.js/issues/5111#issuecomment-355934167
 	 * @private
 	 */
 	_invalidate: function(chart) {
@@ -9369,7 +9369,7 @@ helpers$1.extend(Chart.prototype, /** @lends Chart */ {
 			// The given item is not a compatible context2d element, let's return before finalizing
 			// the chart initialization but after setting basic chart / controller properties that
 			// can help to figure out that the chart is not valid (e.g chart.canvas !== null);
-			// https://github.com/chartassets/js/Chart.assets/js/issues/2807
+			// https://github.com/chartjs/Chart.js/issues/2807
 			console.error("Failed to create chart: can't acquire context from the given item");
 			return;
 		}
@@ -9633,7 +9633,7 @@ helpers$1.extend(Chart.prototype, /** @lends Chart */ {
 		updateConfig(me);
 
 		// plugins options references might have change, let's invalidate the cache
-		// https://github.com/chartassets/js/Chart.assets/js/issues/5111#issuecomment-355934167
+		// https://github.com/chartjs/Chart.js/issues/5111#issuecomment-355934167
 		core_plugins._invalidate(me);
 
 		if (core_plugins.notify(me, 'beforeUpdate') === false) {
@@ -9811,7 +9811,7 @@ helpers$1.extend(Chart.prototype, /** @lends Chart */ {
 		} else {
 			me.draw();
 
-			// See https://github.com/chartassets/js/Chart.assets/js/issues/3781
+			// See https://github.com/chartjs/Chart.js/issues/3781
 			onComplete(new core_animation({numSteps: 0, chart: me}));
 		}
 
@@ -10110,7 +10110,7 @@ helpers$1.extend(Chart.prototype, /** @lends Chart */ {
 		});
 
 		// Elements used to detect size change should not be injected for non responsive charts.
-		// See https://github.com/chartassets/js/Chart.assets/js/issues/2210
+		// See https://github.com/chartjs/Chart.js/issues/2210
 		if (me.options.responsive) {
 			listener = function() {
 				me.resize();
@@ -10812,7 +10812,7 @@ var core_helpers = function() {
 
 		// If no style has been set on the canvas, the render size is used as display size,
 		// making the chart visually bigger, so let's enforce it to the "correct" values.
-		// See https://github.com/chartassets/js/Chart.assets/js/issues/3575
+		// See https://github.com/chartjs/Chart.js/issues/3575
 		if (!canvas.style.height && !canvas.style.width) {
 			canvas.style.height = height + 'px';
 			canvas.style.width = width + 'px';
@@ -14335,7 +14335,7 @@ var defaultConfig$4 = {
 	 * Data distribution along the scale:
 	 * - 'linear': data are spread according to their time (distances can vary),
 	 * - 'series': data are spread at the same distance from each other.
-	 * @see https://github.com/chartassets/js/Chart.assets/js/pull/4507
+	 * @see https://github.com/chartjs/Chart.js/pull/4507
 	 * @since 2.7.0
 	 */
 	distribution: 'linear',
@@ -14344,7 +14344,7 @@ var defaultConfig$4 = {
 	 * Scale boundary strategy (bypassed by min/max time options)
 	 * - `data`: make sure data are fully visible, ticks outside are removed
 	 * - `ticks`: make sure ticks are fully visible, data outside are truncated
-	 * @see https://github.com/chartassets/js/Chart.assets/js/pull/4556
+	 * @see https://github.com/chartjs/Chart.js/pull/4556
 	 * @since 2.7.0
 	 */
 	bounds: 'data',
@@ -14367,7 +14367,7 @@ var defaultConfig$4 = {
 		 * - 'auto': generates "optimal" ticks based on scale size and time options.
 		 * - 'data': generates ticks from data (including labels from data {t|x|y} objects).
 		 * - 'labels': generates ticks from user given `data.labels` values ONLY.
-		 * @see https://github.com/chartassets/js/Chart.assets/js/pull/4507
+		 * @see https://github.com/chartjs/Chart.js/pull/4507
 		 * @since 2.7.0
 		 */
 		source: 'auto',
@@ -20335,7 +20335,7 @@ var plugin_legend = {
 	 * Backward compatibility: since 2.1.5, the legend is registered as a plugin, making
 	 * Chart.Legend obsolete. To avoid a breaking change, we export the Legend as part of
 	 * the plugin, which one will be re-exposed in the chart.js file.
-	 * https://github.com/chartassets/js/Chart.assets/js/pull/2640
+	 * https://github.com/chartjs/Chart.js/pull/2640
 	 * @private
 	 */
 	_element: Legend,
@@ -20579,7 +20579,7 @@ var plugin_title = {
 	 * Backward compatibility: since 2.1.5, the title is registered as a plugin, making
 	 * Chart.Title obsolete. To avoid a breaking change, we export the Title as part of
 	 * the plugin, which one will be re-exposed in the chart.js file.
-	 * https://github.com/chartassets/js/Chart.assets/js/pull/2640
+	 * https://github.com/chartjs/Chart.js/pull/2640
 	 * @private
 	 */
 	_element: Title,

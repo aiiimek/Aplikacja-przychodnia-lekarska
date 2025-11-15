@@ -1,29 +1,6 @@
 <?php
 require_once __DIR__ . '/../../SaySoft/master.php';
-
-login_init();
 $errors = [];
-$email = '';
-$username = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $username = trim($_POST['username'] ?? '');
-  $email = trim($_POST['email'] ?? '');
-  $password = $_POST['password'] ?? '';
-  $password2 = $_POST['password2'] ?? '';
-  $firstName = trim($_POST['firstName'] ?? '') ?: null;
-  $lastName = trim($_POST['lastName'] ?? '') ?: null;
-
-  if ($password !== $password2) {
-    $errors[] = 'Hasła nie są identyczne.';
-  } else {
-    $uid = register_user($username, $email, $password, $errors, $firstName, $lastName);
-    if ($uid) {
-      header('Location: ../login/');
-      exit;
-    }
-  }
-}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -62,34 +39,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <div class="card-body p-5">
                 <h3 class="card-title text-center mb-3">Rejestracja</h3>
 
-                <?php if (!empty($errors)): ?>
-                  <div class="alert alert-danger"><ul class="mb-0"><?php foreach ($errors as $e) echo '<li>'.htmlspecialchars($e).'</li>'; ?></ul></div>
-                <?php endif; ?>
+                <div id="registerAlert"></div>
 
                 <form class="" method="post" action="" id="registerForm">
                   <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input type="text" class="form-control form-control-user" id="firstName" name="firstName" placeholder="Imię" value="<?php echo htmlspecialchars($firstName ?? ''); ?>">
+                      <input type="text" class="form-control form-control-user" id="firstName" name="firstName" placeholder="Imię" value="">
                     </div>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control form-control-user" id="lastName" name="lastName" placeholder="Nazwisko" value="<?php echo htmlspecialchars($lastName ?? ''); ?>">
+                      <input type="text" class="form-control form-control-user" id="lastName" name="lastName" placeholder="Nazwisko" value="">
                     </div>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Nazwa użytkownika" value="<?php echo htmlspecialchars($username); ?>" required>
+                    <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Nazwa użytkownika" value="" >
                   </div>
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Adres e‑mail" value="<?php echo htmlspecialchars($email); ?>" required>
+                    <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Adres e‑mail" value="" >
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Hasło" required minlength="6">
+                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Hasło"  minlength="6">
                     </div>
                     <div class="col-sm-6">
-                      <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Powtórz hasło" required minlength="6">
+                      <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Powtórz hasło"  minlength="6">
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary btn-user btn-block">Zarejestruj konto</button>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="agr">
+                    <label class="form-check-label" for="agr">
+                      Akceptuję warunki polityki prywatności
+                    </label>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-user btn-block" onclick="Login.Register();">Zarejestruj konto</button>
                 </form>
 
                 <hr class="my-4">
@@ -106,20 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="../../js/sb-admin-2.min.js"></script>
-
-    <script>
-    (function(){
-      var form = document.getElementById('registerForm');
-      form.addEventListener('submit', function(e){
-        var p1 = document.getElementById('password').value;
-        var p2 = document.getElementById('password2').value;
-        if (p1 !== p2) {
-          e.preventDefault();
-          alert('Hasła nie są identyczne');
-        }
-      });
-    })();
-    </script>
+    <script src="../../assets/js/base/login.js"></script>
 
 </body>
 
