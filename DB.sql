@@ -1,5 +1,5 @@
 
---klucz: woltyzerka69
+-- klucz: woltyzerka69
 -- Tabela użytkowników (pacjenci, personel)
 CREATE TABLE IF NOT EXISTS tbusers (
   id CHAR(36) NOT NULL PRIMARY KEY,   -- UUID v4
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS tbusers (
   role VARCHAR(50) NOT NULL DEFAULT 'patient', -- patient, doctor, admin
   createdt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, --data założenia konta
   agreement TINYINT(1), -- czy zgoda na wykorzystanie danych osobowych
-  confirmfdt TIMESTAMP NULL, --potwierdzenie rejestracji
+  confirmdt TIMESTAMP NULL, --potwierdzenie rejestracji
   status VARCHAR(50), --NEW, ACTIVE, REMOVED, BLOCKED
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
