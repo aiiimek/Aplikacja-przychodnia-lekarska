@@ -151,3 +151,23 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- inspo https://agnieszkanicpon.igabinet.pl/b/?i=YTo5OntzOjE6ImwiO3M6MzoicG9sIjtzOjI6ImxsIjtpOjA7czoxOiJwIjtOO3M6MjoicGwiO2k6MDtzOjE6ImciO047czoyOiJnbCI7aTowO3M6MToicyI7czowOiIiO3M6Mjoic2wiO2k6MDtzOjE6ImEiO3M6MToiciI7fQ%3D%3D_8ebc349bb7f9ec4eae06c375f45246bb89ccec2528d5f163cc96ff2743734ff0&referer=https%3A%2F%2Fagnieszkanicpon.pl%2F
