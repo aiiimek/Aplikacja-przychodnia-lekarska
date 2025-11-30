@@ -40,6 +40,7 @@
                 <!-- tutaj header -->
                 <?php include 'includes/header.php' ?>
 
+                <!-- start tutaj -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid align-items-center">
 

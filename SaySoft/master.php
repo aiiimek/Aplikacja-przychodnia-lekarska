@@ -96,4 +96,80 @@ class SaySoft {
         }
     }
 
+    public static function modalComponent($id, $title, $confirmText, $confirmAction, $content) {
+        echo <<<HTML
+        <div class="modal fade" id="$id" tabindex="-1" role="dialog" aria-labelledby="modalLabel-$id" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel-$id">$title</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        $content
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Zamknij</button>
+                        <a class="btn btn-primary" href="$confirmAction">$confirmText</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        HTML;
+    }
+
+public static function writeSelect($id = "", $labelText = "", $values = [],  $selected = "", $class = "", $disabled = false) {
+    $disableAttr = $disabled ? "disabled" : "";
+    $classAttr = $class ? $class : "";
+
+    $html = '<div class="form-group $classAttr">';
+    $html .= "<label for='$id'>$labelText</label>";
+    $html .= "<select id='$id' name='$id' class='form-control' $disableAttr>";
+    $html .= "<option selected disabled>$selected</option>";
+
+    foreach($values as $optionId => $optionLabel) {
+        $html .= "<option value='$optionId'>$optionLabel</option>";
+    }
+
+    $html .= "</select></div>";
+
+    return $html;
+}
+
+// Textarea
+public static function writeTextArea($id = "", $labelText = "", $placeholder = "", $class = "", $rows = 3, $disabled = false) {
+    $disableAttr = $disabled ? "disabled" : "";
+    $classAttr = $class ? $class : "";
+
+    $html = '<div class="form-group ' . $classAttr . '">';
+    $html .= "<label for='$id'>$labelText</label>";
+    $html .= "<textarea id='$id' name='$id' class='form-control' rows='$rows' placeholder='$placeholder' $disableAttr></textarea>";
+    $html .= "</div>";
+
+    return $html;
+}
+
+// Date Picker
+public static function writeDatePicker($id = "", $labelText = "", $class = "", $disabled = false, $min = "", $max = "") {
+    $disableAttr = $disabled ? "disabled" : "";
+    $classAttr = $class ? $class : "";
+
+    $html = '<div class="form-group ' . $classAttr . '">';
+    $html .= "<label for='$id'>$labelText</label>";
+    $html .= "<input type='date' id='$id' name='$id' class='form-control' $disableAttr";
+
+    if ($min) $html .= " min='$min'";
+    if ($max) $html .= " max='$max'";
+
+    $html .= ">";
+    $html .= "</div>";
+
+    return $html;
+}
+
+
+
+
 }

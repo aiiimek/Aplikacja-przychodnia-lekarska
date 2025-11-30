@@ -45,3 +45,4 @@
 
 <!-- NASZE FUNKCYJNE JSY -->
 <script src="/Aplikacja-przychodnia-lekarska/assets/js/base/login.js"></script>
+<script src="/Aplikacja-przychodnia-lekarska/assets/js/base/dashboard.js"></script>
