@@ -55,9 +55,6 @@ SaySoft::requireLogin(); // chroni stronę przed niezalogowanymi
                     echo $dashboard->writeContent();
                     ?>
 
-                    <a href="#" data-toggle="modal" data-target="#setVisitModal"
-                        class="d-none d-sm-inline-block btn btn-xl btn-success shadow-sm display-flex justify-content-center"><i
-                            class="fas fa-plus fa-sm text-white-50"></i> UMÓW WIZYTĘ</a>
 
                     <!-- Content Row -->
                     <div class="row display-flex align-items-center justify-content-center">
@@ -292,24 +289,6 @@ SaySoft::requireLogin(); // chroni stronę przed niezalogowanymi
 
             <!-- tu footer -->
             <?php include_once '../../includes/footer.php' ?>
-<?php
-$form = "";
-$doctorSelect = SaySoft::writeSelect("selectDoctor", "Wybierz lekarza", ["1"=>"twoja stara", "2"=>"twoj stary"], "","mt-2 mb-2", false);
-$specialisationSelect = SaySoft::writeSelect("selectSpecialisation", "Wybierz specjalizację", ["1"=>"dupa", "2"=>"głowa"], "","mt-2", false);
-$notesArea = SaySoft::writeTextArea("notes","Dodatkowe uwagi","Np. objawy, preferencje godziny","mt-2 mb-2",3,false);
-$datePicker = SaySoft::writeDatePicker("visitDate","Wybierz datę wizyty","mt-2 mb-2",false,date("Y-m-d"),      date("Y-m-d", strtotime("+1 year")) );
-
-
-$form = $doctorSelect . $specialisationSelect . $notesArea . $datePicker;
-
-SaySoft::modalComponent(
-    "setVisitModal",// id - to musi być w buttonie który wywołje tego modaala
-    "Umów wizytę",// tytuł modala
-    "Umów!",  // tekst przycisku potwierdzenia
-    "#",// link przycisku (albo akcja JS)
-    $form// tutaj wchodzi HTML selecta
-);
-?>
 
 </body>
 

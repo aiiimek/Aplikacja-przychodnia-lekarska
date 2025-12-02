@@ -155,19 +155,136 @@ DELIMITER ;
 
 
 
+-- #################################################################################################### nowość od 02.12.2025
+
+CREATE TABLE IF NOT EXISTS tbroles (
+    id VARCHAR(50) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+) ENGINE=InnoDB;
+
+-- 2. Modyfikacja tbusers
+ALTER TABLE tbusers
+ADD FOREIGN KEY (role) REFERENCES tbroles(id);
+
+
+-- 3. Tabela tbadmin 
+CREATE TABLE IF NOT EXISTS tbadmin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tbusers_id CHAR(36) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    FOREIGN KEY (tbusers_id) REFERENCES tbusers(id)
+) ENGINE=InnoDB;
+
+
+-- 4. Tabela tbpatients 
+CREATE TABLE IF NOT EXISTS tbpatients (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tbusers_id CHAR(36) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    surname VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    pesel VARCHAR(11) UNIQUE,
+    addrStreet VARCHAR(150),
+    addrCity VARCHAR(100),
+    addrPostCode VARCHAR(10),
+    addrFlat VARCHAR(10),
+    FOREIGN KEY (tbusers_id) REFERENCES tbusers(id)
+) ENGINE=InnoDB;
+
+
+-- 5. Tabela tbspecialisation
+CREATE TABLE IF NOT EXISTS tbspecialisation (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL UNIQUE
+) ENGINE=InnoDB;
+
+
+-- 6. Tabela tbdoctors 
+CREATE TABLE IF NOT EXISTS tbdoctors (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tbusers_id CHAR(36) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    surname VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    FOREIGN KEY (tbusers_id) REFERENCES tbusers(id)
+) ENGINE=InnoDB;
+
+
+-- 7. Tabela tbdoctors_has_tbspecialisation
+CREATE TABLE IF NOT EXISTS tbdoctors_has_tbspecialisation (
+    tbDoctors_id INT NOT NULL,
+    tbspecialisation_id INT NOT NULL,
+
+    PRIMARY KEY (tbDoctors_id, tbspecialisation_id),
+
+    FOREIGN KEY (tbDoctors_id)
+        REFERENCES tbdoctors(id),
+
+    FOREIGN KEY (tbspecialisation_id)
+        REFERENCES tbspecialisation(id)
+) ENGINE=InnoDB;
+
+
+-- 8. Tabela tbvisits
+CREATE TABLE IF NOT EXISTS tbvisits (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tbDoctors_id INT NOT NULL,
+    tbPatients_id INT NOT NULL,
+
+    visitDate DATETIME NOT NULL,
+    visitDesc TEXT,
+
+    FOREIGN KEY (tbDoctors_id)
+        REFERENCES tbdoctors(id),
+
+    FOREIGN KEY (tbPatients_id)
+        REFERENCES tbpatients(id)
+) ENGINE=InnoDB;
+
+
+-- 9. Tabela tbrefs
+CREATE TABLE IF NOT EXISTS tbrefs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    date DATE NOT NULL,
+    description TEXT
+) ENGINE=InnoDB;
 
 
 
+-- ############################################################# WSTAWIANIE TESTOWYCH DANYCH
+SET @UUID_DR_KOWALSKI = 'd1d1d1d1-e2e2-f3f3-g4g4-h5h5h5h5h5h5';
+SET @UUID_DR_NOWAK = 'e1e1e1e1-f2f2-g3g3-h4h4-i5i5i5i5i5i5i5';
+SET @UUID_PACJENT_JAN = 'p1p1p1p1-a2a2-c3c3-e4e4-n5n5n5n5n5n5';
+SET @UUID_PACJENT_ANNA = 'p2p2p2p2-b3b3-d4d4-f5f5-o6o6o6o6o6o6';
 
 
+INSERT INTO tbusers (id, login, email, password, role, agreement, status) VALUES
+(@UUID_DR_KOWALSKI, 'dr.kowalski', 'dr.kowalski@klinika.pl', 'haslo_lekarza1', 'doctor', 1, 'ACTIVE'),
+(@UUID_DR_NOWAK, 'dr.nowak', 'dr.nowak@klinika.pl', 'haslo_lekarza2', 'doctor', 1, 'ACTIVE'),
+(@UUID_PACJENT_JAN, 'jan.pacjent', 'jan.pacjent@mail.com', 'haslo_pacjenta1', 'patient', 1, 'ACTIVE'),
+(@UUID_PACJENT_ANNA, 'anna.pacjent', 'anna.pacjent@mail.com', 'haslo_pacjenta2', 'patient', 1, 'ACTIVE');
 
 
+INSERT INTO tbspecialisation (id, name) VALUES
+(1, 'Kardiolog'),
+(2, 'Pediatra'),
+(3, 'Neurolog'),
+(4, 'Laryngolog');
 
 
+INSERT INTO tbdoctors (id, tbusers_id, name, surname, phone) VALUES
+(1, @UUID_DR_KOWALSKI, 'Adam', 'Kowalski', '600100200'),
+(2, @UUID_DR_NOWAK, 'Ewa', 'Nowak', '600300400');
 
 
+INSERT INTO tbpatients (id, tbusers_id, name, surname, phone, pesel, addrCity) VALUES
+(1, @UUID_PACJENT_JAN, 'Jan', 'Pacjent', '555111222', '90010112345', 'Warszawa'),
+(2, @UUID_PACJENT_ANNA, 'Anna', 'Kowalska', '555333444', '95050554321', 'Kraków');
 
 
-
+INSERT INTO tbdoctors_has_tbspecialisation (tbDoctors_id, tbspecialisation_id) VALUES
+(1, 1),
+(1, 3),
+(2, 2);
 
 -- inspo https://agnieszkanicpon.igabinet.pl/b/?i=YTo5OntzOjE6ImwiO3M6MzoicG9sIjtzOjI6ImxsIjtpOjA7czoxOiJwIjtOO3M6MjoicGwiO2k6MDtzOjE6ImciO047czoyOiJnbCI7aTowO3M6MToicyI7czowOiIiO3M6Mjoic2wiO2k6MDtzOjE6ImEiO3M6MToiciI7fQ%3D%3D_8ebc349bb7f9ec4eae06c375f45246bb89ccec2528d5f163cc96ff2743734ff0&referer=https%3A%2F%2Fagnieszkanicpon.pl%2F

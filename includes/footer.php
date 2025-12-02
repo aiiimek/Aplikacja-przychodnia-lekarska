@@ -44,5 +44,5 @@
 <script src="/Aplikacja-przychodnia-lekarska/assets/js/demo/datatables-demo.js"></script>
 
 <!-- NASZE FUNKCYJNE JSY -->
-<script src="/Aplikacja-przychodnia-lekarska/assets/js/base/login.js"></script>
-<script src="/Aplikacja-przychodnia-lekarska/assets/js/base/dashboard.js"></script>
+<script src="/Aplikacja-przychodnia-lekarska/assets/js/base/login.js?v=<?=time()?>"></script>
+<script src="/Aplikacja-przychodnia-lekarska/assets/js/base/dashboard.js?v=<?=time()?>"></script>

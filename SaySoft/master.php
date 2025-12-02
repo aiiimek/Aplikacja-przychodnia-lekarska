@@ -120,16 +120,26 @@ class SaySoft {
         HTML;
     }
 
-public static function writeSelect($id = "", $labelText = "", $values = [],  $selected = "", $class = "", $disabled = false) {
-    $disableAttr = $disabled ? "disabled" : "";
+public static function writeSelect($id = "", $labelText = "", $values = [], $selected = "", $class = "", $options = []) {
     $classAttr = $class ? $class : "";
+    $attrString = "";
 
-    $html = '<div class="form-group $classAttr">';
+    foreach ($options as $key => $value) {
+        if (is_bool($value) && $value) {
+            $attrString .= " $key";
+        } elseif (!is_bool($value)) {
+            $attrString .= " $key='$value'";
+        }
+    }
+
+    $html = '<div class="form-group ' . $classAttr . '">';
     $html .= "<label for='$id'>$labelText</label>";
-    $html .= "<select id='$id' name='$id' class='form-control' $disableAttr>";
-    $html .= "<option selected disabled>$selected</option>";
+    $html .= "<select id='$id' name='$id' class='form-control' $attrString>";
+    if ($selected) {
+        $html .= "<option selected disabled>$selected</option>";
+    }
 
-    foreach($values as $optionId => $optionLabel) {
+    foreach ($values as $optionId => $optionLabel) {
         $html .= "<option value='$optionId'>$optionLabel</option>";
     }
 
@@ -137,6 +147,7 @@ public static function writeSelect($id = "", $labelText = "", $values = [],  $se
 
     return $html;
 }
+
 
 // Textarea
 public static function writeTextArea($id = "", $labelText = "", $placeholder = "", $class = "", $rows = 3, $disabled = false) {
@@ -152,23 +163,26 @@ public static function writeTextArea($id = "", $labelText = "", $placeholder = "
 }
 
 // Date Picker
-public static function writeDatePicker($id = "", $labelText = "", $class = "", $disabled = false, $min = "", $max = "") {
-    $disableAttr = $disabled ? "disabled" : "";
+public static function writeDatePicker($id = "", $labelText = "", $class = "", $options = []) {
     $classAttr = $class ? $class : "";
+    $attrString = "";
+
+    foreach ($options as $key => $value) {
+        // jeśli wartość jest true i to atrybut typu boolean (disabled, required itp.)
+        if (is_bool($value) && $value) {
+            $attrString .= " $key";
+        } elseif (!is_bool($value)) {
+            $attrString .= " $key='$value'";
+        }
+    }
 
     $html = '<div class="form-group ' . $classAttr . '">';
     $html .= "<label for='$id'>$labelText</label>";
-    $html .= "<input type='date' id='$id' name='$id' class='form-control' $disableAttr";
-
-    if ($min) $html .= " min='$min'";
-    if ($max) $html .= " max='$max'";
-
-    $html .= ">";
+    $html .= "<input type='date' id='$id' name='$id' class='form-control' $attrString>";
     $html .= "</div>";
 
     return $html;
 }
-
 
 
 
