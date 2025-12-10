@@ -1,5 +1,6 @@
 <?php
 header("Content-Type: application/json");
+require_once __DIR__ . '/../../SaySoft/master.php';
 
 if (!isset($_GET['spec'])) {
     echo json_encode([]);
@@ -9,16 +10,9 @@ if (!isset($_GET['spec'])) {
 $specId = $_GET['spec'];
 
 
-// Przykład na sztywno:
-$doctors = [
-    1 => [
-        ["id" => 11, "name" => "dr Kowalski"],
-        ["id" => 12, "name" => "dr Wiśniewski"]
-    ],
-    2 => [
-        ["id" => 21, "name" => "dr Głowacka"],
-        ["id" => 22, "name" => "dr Mózg"]
-    ]
-];
+$dashboard = new Dashboard();
+$doctors = $dashboard->getDoctors();
+
 
 echo json_encode($doctors[$specId] ?? []);
+

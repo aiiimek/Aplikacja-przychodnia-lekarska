@@ -11279,3 +11279,31 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+#customControls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#customControls .dataTables_filter {
+    display: flex !important;
+    align-items: center;
+    margin: 0 !important;
+}
+
+#customControls .dataTables_filter label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    gap: 0.5rem;
+}
+
+#customControls .dataTables_filter input {
+    width: auto !important; /* nie 100%, tylko dopasowanie do tekstu */
+}
+
+#customControls .dataTables_paginate {
+    margin: 0;
+}
+

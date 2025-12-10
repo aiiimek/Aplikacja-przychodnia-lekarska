@@ -2,3 +2,27 @@
 .auth-card { border-radius: 1rem; overflow: hidden; }
 .auth-left { background: linear-gradient(180deg,#4e73df 0%,#224abe 100%); color: #fff; }
 .auth-left .brand { font-weight:700; letter-spacing: .5px; }
+
+#customControls {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* odstęp między search a paginacją */
+}
+
+#customControls .dataTables_filter {
+    margin: 0; /* usuń marginesy DataTables */
+    display: flex; /* label i input w jednej linii */
+    align-items: center;
+}
+
+#customControls .dataTables_filter label {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* odstęp między tekstem a inputem */
+}
+
+#customControls .dataTables_paginate {
+    margin: 0; /* usuń marginesy */
+}
+

@@ -98,7 +98,7 @@ var Login = {
             dataArr[id] = (el.type === 'checkbox') ? (el.checked ? 1 : 0) : el.value.trim();
         });
 
-        // walidacja
+        // walidacja -UWAGA - NIE WALIDUJEMY JSEM - UŻYWAMY PHPA
         if (!dataArr.firstName || dataArr.firstName.length < 3)
             return Login.registerAlert(alertBox, 'Imię musi mieć minimum 3 znaki.');
 

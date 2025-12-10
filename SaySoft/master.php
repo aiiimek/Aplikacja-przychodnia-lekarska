@@ -108,11 +108,12 @@ class SaySoft {
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div id="alertBox-$id"></div>
                         $content
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Zamknij</button>
-                        <a class="btn btn-primary" href="$confirmAction">$confirmText</a>
+                        <button class="btn btn-primary" type="button" onclick="$confirmAction">$confirmText</button>
                     </div>
                 </div>
             </div>
@@ -183,6 +184,74 @@ public static function writeDatePicker($id = "", $labelText = "", $class = "", $
 
     return $html;
 }
+
+public static function writeDataTable($id = "", $headers = [], $rows = [], $class = "table table-bordered table-striped", $headerclass = "", $options = []) {
+    $classAttr = $class ? $class : "";
+    $attrString = "";
+
+    $html = "<table id='$id' class='$classAttr' width='100%' cellspacing='0' $attrString>";
+
+    // thead
+    if (!empty($headers)) {
+        $html .= "<thead class='$headerclass'><tr>";
+        foreach ($headers as $idx => $header) {
+            $style = "";
+            if (!empty($options['hiddenColumns'])) {
+                if (in_array($idx, $options['hiddenColumns']) || in_array($header, $options['hiddenColumns'])) {
+                    $style = " style='display:none;'";
+                }
+            }
+            $html .= "<th$style>$header</th>";
+        }
+        $html .= "</tr></thead>";
+    }
+
+    // tbody
+    $html .= "<tbody>";
+    foreach ($rows as $row) {
+
+        // data-id
+        $dataIdAttr = "";
+        if (isset($options['dataId'])) {
+            $key = $options['dataId'];
+            if (isset($row[$key])) {
+                $dataIdAttr = " data-id='{$row[$key]}'";
+            }
+        }
+
+        $html .= "<tr$dataIdAttr>";
+        foreach ($row as $idx => $cell) {
+
+            $style = "";
+            $extraClass = "";
+
+            // ukryte kolumny
+            if (!empty($options['hiddenColumns'])) {
+                if (in_array($idx, $options['hiddenColumns']) || in_array($headers[$idx], $options['hiddenColumns'])) {
+                    $style = " style='display:none;'";
+                }
+            }
+
+            // kolorowanie konkretnej celki
+            if (!empty($options['colStyle']) && isset($options['colStyle'][$idx])) {
+                foreach ($options['colStyle'][$idx] as $text => $className) {
+                    if ($cell == $text) {
+                        $extraClass = " class='$className'";
+                        break;
+                    }
+                }
+            }
+
+            $html .= "<td$style$extraClass>$cell</td>";
+        }
+        $html .= "</tr>";
+    }
+    $html .= "</tbody>";
+
+    $html .= "</table>";
+    return $html;
+}
+
 
 
 

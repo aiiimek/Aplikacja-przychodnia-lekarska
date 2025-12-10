@@ -287,4 +287,192 @@ INSERT INTO tbdoctors_has_tbspecialisation (tbDoctors_id, tbspecialisation_id) V
 (1, 3),
 (2, 2);
 
+
+
+
+-- ######################## nowe 03.12.2025
+-- to do wprowadzenia systemu że lekarz musi potwierdzić wizytę, aby się odbyła.
+
+ALTER TABLE tbvisits
+ADD COLUMN status VARCHAR(50);
+-- oczekwiane statusy to WAITING, APPROVED, DONE, CANCELLED
+
+-- a tego zapomniałam albo nie chciałam pamiętać
+ALTER TABLE tbvisits
+ADD COLUMN specid INT(11),
+ADD FOREIGN KEY (specid) REFERENCES tbspecialisation(id);
+
+-- dobra to też się przyda; użytkownik nie może zaspamować lekarzowi skrzynki - zrobimy na podstawie daty: max 1 do 1 lekarza i max 5 na dzień?
+ALTER TABLE tbvisits
+ADD COLUMN credt TIMESTAMP
+DEFAULT NOW();
+
+-- a to do sprawdzania czy lekarz nie jest już zajęty i ewentualnie do wpisania wolnego/urlopu xd
+ALTER TABLE tbvisits
+ADD COLUMN visitDuration TIME
+DEFAULT '00:15:00';
+
+ALTER TABLE tbdoctors
+ADD COLUMN defaultVisitDuration TIME
+DEFAULT '00:15:00';
+
+
+-- ############### procedura na dodanie wizyty
+DELIMITER //
+
+CREATE FUNCTION setVisit (
+    _spec INT,
+    _doctorid INT, 
+    _visitDate TIMESTAMP,
+    _visitDesc VARCHAR(268),
+    _userId CHAR(36)
+)
+RETURNS VARCHAR(20)
+DETERMINISTIC -- Wskazuje, że dla tych samych danych, funkcja zwróci ten sam wynik
+BEGIN
+    DECLARE current_doc_visits INT DEFAULT 0;
+    DECLARE patient_visits_today INT DEFAULT 0;
+    DECLARE patientID_val INT; 
+    DECLARE defaultVisitTime_val TIME;
+    DECLARE docsShift_val TIME;
+    
+    -- szukam id pacjenta
+    SELECT id INTO patientID_val
+    FROM tbpatients
+    WHERE tbusers_id = _userId;
+    
+    -- a ziomek w ogóle z nami jest?
+    IF patientID_val IS NULL THEN
+        RETURN 'NO_PATIENT';
+    END IF;
+    
+    -- patrze czy typ nie spamuje lekarzowi (max 1 waiting)
+    SELECT COUNT(*)
+    INTO current_doc_visits
+    FROM tbvisits
+    WHERE tbpatients_id = patientID_val 
+      AND tbdoctors_id = _doctorid
+      AND status = 'WAITING';
+    
+    -- czy pacjent nie spamuje ogółem (5 dziennie max)
+    SELECT COUNT(*)
+    INTO patient_visits_today
+    FROM tbvisits
+    WHERE tbpatients_id = patientID_val
+      AND DATE(visitDate) = DATE(_visitDate); -- sprawdzamy na konkretny dzień
+
+    -- nie przemęczamy lekarzy
+    SELECT defaultVisitDuration INTO defaultVisitTime_val
+    FROM tbdoctors
+    WHERE id = _doctorid;
+    
+    -- Łączny czas wizyt w tym dniu
+    -- Użyto COALESCE, aby zamienić NULL (brak wizyt) na '00:00:00'
+    SELECT COALESCE(SUM(visitDuration), '00:00:00')
+    INTO docsShift_val
+    FROM tbvisits
+    WHERE tbdoctors_id = _doctorid
+      AND DATE(visitDate) = DATE(_visitDate);
+    
+    
+    -- lece z ifozą
+    IF current_doc_visits > 0 THEN
+        RETURN 'WAITING'; -- Pacjent już ma oczekującą wizytę u tego lekarza
+    
+    ELSEIF patient_visits_today >= 5 THEN
+        RETURN 'OVER5'; -- Przekroczony limit 5 wizyt dziennie
+    
+    -- porównanie w sekundach: Lekarz ma już zarezerwowane 7 lub więcej godzin
+    ELSEIF TIME_TO_SEC(docsShift_val) >= TIME_TO_SEC('07:00:00') THEN
+        RETURN 'BUSY'; 
+    
+    ELSE
+        -- Wszystkie warunki wstępne OK, wstawiamy wizytę
+        INSERT INTO tbvisits (
+            tbDoctors_id, 
+            tbpatients_id, 
+            visitDate, 
+            visitDesc, 
+            status, 
+            specid, 
+            visitDuration
+        )
+        VALUES (
+            _doctorid, 
+            patientID_val, 
+            _visitDate, 
+            _visitDesc, 
+            'WAITING', 
+            _spec, 
+            defaultVisitTime_val
+        );
+        
+        RETURN 'SUCCESS'; -- Pomyślne wstawienie
+        
+    END IF; -- Koniec if
+
+END //
+
+DELIMITER ;
+
+
+-- #################### NOWE trigger dla tbpatients - dodajemy rekord wraz z rejestracją
+
+DELIMITER $$
+
+CREATE TRIGGER after_user_insert
+AFTER INSERT ON tbusers
+FOR EACH ROW
+BEGIN
+    IF NEW.role = 'patient' THEN
+        INSERT INTO tbpatients (tbusers_id, name, surname)
+        VALUES (NEW.id, NEW.name, NEW.surname);
+    END IF;
+END$$
+
+DELIMITER ;
+
+
+-- to do szukania lekarzuf
+
+CREATE OR REPLACE VIEW vwDoctorsBySpec AS
+SELECT 
+    s.id AS specid,
+    d.id AS doctor_id,
+    CONCAT('dr ', d.name, ' ', d.surname) AS doctor_name
+FROM tbdoctors_has_tbspecialisation ds
+JOIN tbdoctors d ON ds.tbdoctors_id = d.id
+JOIN tbspecialisation s ON ds.tbspecialisation_id = s.id
+ORDER BY s.id, d.name;
+
+
+-- to do pokazuwania wizytuf
+DROP FUNCTION IF EXISTS getVisits;
+DELIMITER $$
+
+CREATE FUNCTION getVisits(_userId CHAR(36))
+RETURNS JSON
+DETERMINISTIC
+BEGIN
+    RETURN (
+        SELECT JSON_ARRAYAGG(JSON_OBJECT(
+            'id', v.id,
+            'visitDate', DATE_FORMAT(v.visitDate, '%Y-%m-%d %H:%i:%s'),
+            'doctor', CONCAT(d.name, ' ', d.surname),
+            'spec', s.name,
+            'visitDesc', v.visitDesc,
+            'status', v.status
+        ))
+        FROM tbvisits v
+        JOIN tbpatients p ON v.tbPatients_id = p.id
+        JOIN tbdoctors d ON v.tbDoctors_id = d.id
+        JOIN tbspecialisation s ON v.specid = s.id
+        WHERE p.tbusers_id = _userId
+        ORDER BY v.visitDate DESC
+    );
+END$$
+
+DELIMITER ;
+
+
 -- inspo https://agnieszkanicpon.igabinet.pl/b/?i=YTo5OntzOjE6ImwiO3M6MzoicG9sIjtzOjI6ImxsIjtpOjA7czoxOiJwIjtOO3M6MjoicGwiO2k6MDtzOjE6ImciO047czoyOiJnbCI7aTowO3M6MToicyI7czowOiIiO3M6Mjoic2wiO2k6MDtzOjE6ImEiO3M6MToiciI7fQ%3D%3D_8ebc349bb7f9ec4eae06c375f45246bb89ccec2528d5f163cc96ff2743734ff0&referer=https%3A%2F%2Fagnieszkanicpon.pl%2F
