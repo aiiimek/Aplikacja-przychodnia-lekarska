@@ -1,6 +1,9 @@
-# 🏥 Lekario - System Zarządzania Przychodnią Lekarską
-
 <div align="center">
+
+<img src="assets/img/lekario.png" alt="Lekario Logo" width="400"/>
+
+# 🏥 Lekario
+### System Zarządzania Przychodnią Lekarską
 
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
@@ -11,16 +14,65 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![SASS](https://img.shields.io/badge/SASS-CC6699?style=for-the-badge&logo=sass&logoColor=white)
-![FontAwesome](https://img.shields.io/badge/Font_Awesome-528DD7?style=for-the-badge&logo=font-awesome&logoColor=white)
-![DataTables](https://img.shields.io/badge/DataTables-1F4788?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAAowAAAKMB8MeazgAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEXSURBVCiRY2AYBaNgFAwCwIjN8P///zMwMDAwMjIyMvz//x+mCKYBpgGmAaYBpgGm4f///zANMA0wDTANME1gk2EaYBpgGmAaYJpgGmAaYBpgGmCaYBpgGmAaYBpgmmAaYBpgGmAaYJpgGmAaYBpgGmCaYBpgGmAaYBpgmmAaYBpgGv7//w/TANMA0wDTBNMA0wDTANMA0wTTANMA0wDTANME0wDTANMA0wDTBNMA0wDTANMA0wTTANMA0wDTANME0wDTANMA0wDTBNMA0wDTANMA0wTTANMA0wDTANME0wDTANMA0wDTBNMA0wDTANMA0wTTANMA0wDTANME0wDTANMA0wDTBNMA0wDTANMA0wTTANMwCgYBAACuLQ4PfRjLhAAAAABJRU5ErkJggg==&logoColor=white)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge)](https://github.com/yourusername/Aplikacja-przychodnia-lekarska/graphs/commit-activity)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 
-### 🚀 Kompleksowy system do zarządzania przychodnią lekarską z zaawansowanym systemem szyfrowania danych medycznych
+---
 
-[Funkcjonalności](#-funkcjonalności) • [Instalacja](#-instalacja) • [Technologie](#-stack-technologiczny) • [Architektura](#-architektura) • [Bezpieczeństwo](#-bezpieczeństwo) • [Dokumentacja](#-dokumentacja)
+### 👥 Zespół
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/Raparinio">
+          <img src="https://github.com/Raparinio.png?s=100" width="100px;" alt="Raparinio"/>
+          <br />
+          <sub><b>Raparinio</b></sub>
+        </a>
+        <br />
+        💻 🎨
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/Dantial">
+          <img src="https://github.com/Dantial.png?s=100" width="100px;" alt="Dantial"/>
+          <br />
+          <sub><b>Dantial</b></sub>
+        </a>
+        <br />
+        💻 🗄️
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/ImSayvi">
+          <img src="https://github.com/ImSayvi.png?s=100" width="100px;" alt="ImSayvi"/>
+          <br />
+          <sub><b>ImSayvi</b></sub>
+        </a>
+        <br />
+        💻 ⚙️
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/aiiimek">
+          <img src="https://github.com/aiiimek.png?s=100" width="100px;" alt="aiiimek"/>
+          <br />
+          <sub><b>aiiimek</b></sub>
+        </a>
+        <br />
+        💻 🎨
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/Arczisork">
+          <img src="https://github.com/Arczisork.png?s=100" width="100px;" alt="Arczisork"/>
+          <br />
+          <sub><b>Arczisork</b></sub>
+        </a>
+        <br />
+        💻 📖
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -208,241 +260,7 @@ CREATE TABLE tbusers (
 - **`createVisit`** - Tworzenie nowej wizyty
 - **`cancelVisit`** - Anulowanie wizyty
 
-## 🚀 Instalacja
 
-### Wymagania Systemowe
-
-```bash
-PHP >= 7.4
-MySQL >= 8.0 lub MariaDB >= 10.5
-Apache/Nginx
-Composer (opcjonalnie)
-Node.js >= 14 (dla development)
-```
-
-### Krok po kroku
-
-#### 1️⃣ Sklonuj repozytorium
-```bash
-git clone https://github.com/yourusername/Aplikacja-przychodnia-lekarska.git
-cd Aplikacja-przychodnia-lekarska
-```
-
-#### 2️⃣ Konfiguracja bazy danych
-```bash
-# Utwórz bazę danych
-mysql -u root -p
-
-CREATE DATABASE lekario_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE lekario_db;
-
-# Zaimportuj schemat
-SOURCE DB.sql;
-# lub
-mysql -u root -p lekario_db < DB.sql
-```
-
-#### 3️⃣ Konfiguracja połączenia
-Edytuj plik `SaySoft/dbconn.php`:
-```php
-<?php
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'lekario_db');
-define('DB_USER', 'your_username');
-define('DB_PASS', 'your_password');
-define('DB_CHARSET', 'utf8mb4');
-
-// Klucz szyfrowania (ZMIEŃ NA SWÓJ!)
-define('ENCRYPTION_KEY', 'your-secret-encryption-key-min-32-chars');
-?>
-```
-
-#### 4️⃣ Uprawnienia katalogów
-```bash
-chmod -R 755 assets/
-chmod -R 644 assets/css/*.css
-chmod -R 644 assets/js/*.js
-```
-
-#### 5️⃣ Konfiguracja wirtualnego hosta (opcjonalnie)
-
-**Apache - `/etc/apache2/sites-available/lekario.conf`:**
-```apache
-<VirtualHost *:80>
-    ServerName lekario.local
-    DocumentRoot /var/www/html/Aplikacja-przychodnia-lekarska
-    
-    <Directory /var/www/html/Aplikacja-przychodnia-lekarska>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
-    </Directory>
-    
-    ErrorLog ${APACHE_LOG_DIR}/lekario_error.log
-    CustomLog ${APACHE_LOG_DIR}/lekario_access.log combined
-</VirtualHost>
-```
-
-**Nginx - `/etc/nginx/sites-available/lekario`:**
-```nginx
-server {
-    listen 80;
-    server_name lekario.local;
-    root /var/www/html/Aplikacja-przychodnia-lekarska;
-    index index.php index.html;
-
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
-
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-}
-```
-
-#### 6️⃣ Uruchom aplikację
-```bash
-# Jeśli używasz wbudowanego serwera PHP (development)
-php -S localhost:8000
-
-# Lub otwórz w przeglądarce
-http://localhost/Aplikacja-przychodnia-lekarska
-# lub
-http://lekario.local
-```
-
-### 🎨 Development Mode
-
-```bash
-# Zainstaluj dependencies dla SASS compilation
-cd assets/vendor/sbadmin
-npm install
-
-# Watch SCSS changes
-npm run watch
-
-# Build production CSS
-npm run build
-```
-
-## 📖 Dokumentacja
-
-### Moduły Systemu
-
-#### 🔑 Logowanie (`sites/login/`)
-- Autoryzacja użytkownika
-- Walidacja danych po stronie serwera i klienta
-- Regeneracja sesji po logowaniu
-- Przekierowanie na podstawie roli użytkownika
-
-#### 📝 Rejestracja (`sites/register/`)
-- Formularz rejestracji z walidacją
-- Sprawdzanie unikalności loginu/emaila
-- Szyfrowanie danych wrażliwych
-- Email weryfikacyjny (opcjonalnie)
-
-#### 📊 Dashboard (`sites/dashboard/`)
-- Statystyki wizyt (Chart.js)
-- Nadchodzące wizyty
-- Szybkie akcje
-- Powiadomienia
-
-#### 👥 Zarządzanie Wizytami
-- **setVisit.php** - Rezerwacja wizyty
-- **cancelVisit.php** - Anulowanie wizyty  
-- **getDoctors.php** - API endpoint dla listy lekarzy
-
-### API Endpoints
-
-#### Wizyty
-```javascript
-// Pobierz listę lekarzy
-GET /sites/dashboard/getDoctors.php
-
-// Umów wizytę
-POST /sites/dashboard/setVisit.php
-Body: { doctorId, date, time, reason }
-
-// Anuluj wizytę
-POST /sites/dashboard/cancelVisit.php
-Body: { visitId }
-```
-
-#### Autoryzacja
-```javascript
-// Logowanie
-POST /sites/login/login.php
-Body: { username, password }
-
-// Rejestracja
-POST /sites/register/save.php
-Body: { username, email, password, firstName, lastName, agreement }
-
-// Wylogowanie
-GET /sites/login/logout.php
-```
-
-## 🎨 Customizacja
-
-### Zmiana kolorów motywu
-Edytuj `assets/scss/_variables.scss`:
-```scss
-// Primary color
-$primary: #4e73df;
-
-// Success, info, warning, danger
-$success: #1cc88a;
-$info: #36b9cc;
-$warning: #f6c23e;
-$danger: #e74a3b;
-```
-
-### Dodanie nowego modułu
-
-1. Utwórz katalog w `sites/nazwa_modulu/`
-2. Dodaj plik `index.php`
-3. Dodaj link w `includes/sidenav.php`
-4. Dodaj kontroler w `model/NazwaModulu.php`
-
-## 🐛 Rozwiązywanie Problemów
-
-### Problem: Nie można połączyć się z bazą danych
-```bash
-# Sprawdź status MySQL
-sudo systemctl status mysql
-
-# Sprawdź dane dostępowe w dbconn.php
-# Zweryfikuj czy użytkownik ma uprawnienia
-GRANT ALL PRIVILEGES ON lekario_db.* TO 'user'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-### Problem: Błąd 500 - Internal Server Error
-```bash
-# Sprawdź logi Apache
-tail -f /var/log/apache2/error.log
-
-# Sprawdź logi PHP
-tail -f /var/log/php/error.log
-
-# Włącz wyświetlanie błędów (tylko development!)
-# W php.ini:
-display_errors = On
-error_reporting = E_ALL
-```
-
-### Problem: Sesja nie działa
-```bash
-# Sprawdź uprawnienia katalogu sesji
-ls -la /var/lib/php/sessions
-
-# Upewnij się, że session_start() jest pierwszą linią
-# Sprawdź czy nie ma output przed session_start()
-```
 
 ## 🤝 Contributing
 
@@ -489,70 +307,62 @@ in the Software without restriction...
 
 ### 🤝 Kontrybutorzy
 
-Dziękujemy wszystkim, którzy przyczynili się do rozwoju projektu! Każdy wkład jest dla nas ważny.
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Nie modyfikuj tego komentarza ręcznie -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-
 <table>
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%">
-        <a href="https://github.com/yourusername">
-          <img src="https://github.com/yourusername.png?s=100" width="100px;" alt="Twój Profil"/>
+        <a href="https://github.com/Raparinio">
+          <img src="https://github.com/Raparinio.png?s=100" width="100px;" alt="Raparinio"/>
           <br />
-          <sub><b>Twoje Imię</b></sub>
+          <sub><b>Raparinio</b></sub>
         </a>
         <br />
-        <a href="https://github.com/yourusername/Aplikacja-przychodnia-lekarska/commits?author=yourusername" title="Code">💻</a>
-        <a href="#design-yourusername" title="Design">🎨</a>
-        <a href="#ideas-yourusername" title="Ideas">🤔</a>
+        <a title="Code">💻</a>
+        <a title="Design">🎨</a>
       </td>
-      <!-- Dodaj tutaj kolejnych kontrybutorów - skopiuj powyższy blok <td>...</td> -->
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/Dantial">
+          <img src="https://github.com/Dantial.png?s=100" width="100px;" alt="Dantial"/>
+          <br />
+          <sub><b>Dantial</b></sub>
+        </a>
+        <br />
+        <a title="Code">💻</a>
+        <a title="Database">🗄️</a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/ImSayvi">
+          <img src="https://github.com/ImSayvi.png?s=100" width="100px;" alt="ImSayvi"/>
+          <br />
+          <sub><b>ImSayvi</b></sub>
+        </a>
+        <br />
+        <a title="Code">💻</a>
+        <a title="Backend">⚙️</a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/aiiimek">
+          <img src="https://github.com/aiiimek.png?s=100" width="100px;" alt="aiiimek"/>
+          <br />
+          <sub><b>aiiimek</b></sub>
+        </a>
+        <br />
+        <a title="Code">💻</a>
+        <a title="Frontend">🎨</a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/Arczisork">
+          <img src="https://github.com/Arczisork.png?s=100" width="100px;" alt="Arczisork"/>
+          <br />
+          <sub><b>Arczisork</b></sub>
+        </a>
+        <br />
+        <a title="Code">💻</a>
+        <a title="Documentation">📖</a>
+      </td>
     </tr>
   </tbody>
 </table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-#### Jak dodać kontrybutora:
-Skopiuj poniższy template i wklej w tabeli powyżej:
-
-```html
-<td align="center" valign="top" width="14.28%">
-  <a href="https://github.com/USERNAME">
-    <img src="https://github.com/USERNAME.png?s=100" width="100px;" alt="NAME"/>
-    <br />
-    <sub><b>NAME</b></sub>
-  </a>
-  <br />
-  <a href="https://github.com/yourusername/Aplikacja-przychodnia-lekarska/commits?author=USERNAME" title="Code">💻</a>
-  <a href="#design-USERNAME" title="Design">🎨</a>
-</td>
-```
-
-**Legenda emoji:**
-- 💻 Code - Wkład w kod
-- 🎨 Design - Design i UI/UX
-- 📖 Documentation - Dokumentacja
-- 🤔 Ideas - Pomysły i koncepcje
-- 🐛 Bug reports - Zgłaszanie bugów
-- 🔧 Maintenance - Utrzymanie projektu
-- 🔌 Plugin/Utilities - Narzędzia i wtyczki
-- 📆 Project Management - Zarządzanie projektem
-- 💬 Answering Questions - Odpowiadanie na pytania
-- ⚠️ Tests - Testy
-- 🌍 Translation - Tłumaczenia
-
-**Automatyczne wyświetlanie kontrybutorów:**
-
-[![Contributors](https://contrib.rocks/image?repo=yourusername/Aplikacja-przychodnia-lekarska)](https://github.com/yourusername/Aplikacja-przychodnia-lekarska/graphs/contributors)
-
-*Kliknij w avatar, aby przejść do profilu kontrybutora na GitHubie*
 
 ---
 
